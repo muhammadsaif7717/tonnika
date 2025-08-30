@@ -1,0 +1,229 @@
+# Tonnika.com - Project Overview
+*Premium Handcrafted Beauty & Accessories E-commerce Platform*
+
+---
+
+## 📋 Project Summary
+
+Tonnika.com is a modern, responsive e-commerce platform specializing in handmade bangles and women's cosmetics. The website combines artisanal craftsmanship with contemporary digital aesthetics, targeting fashion-conscious women aged 18-45 who value unique, handcrafted products and premium beauty experiences.
+
+**Core Objectives:**
+- Create an immersive shopping experience that highlights product craftsmanship
+- Build trust through transparent product stories and artisan profiles
+- Optimize for mobile-first shopping with seamless checkout flow
+- Establish premium brand positioning in the handmade luxury market
+
+---
+
+## 💻 Technology Stack
+
+### Frontend Framework
+- **Next.js 14+** with App Router & Turbopack for optimal performance
+- **React 18+** with TypeScript for type-safe development
+- **Tailwind CSS** with shadcn/ui component library for consistent design
+- **Framer Motion** + tw-animate-css for sophisticated animations
+- **next-themes** for seamless dual-mode theming
+
+### Authentication & Backend
+- **NextAuth.js** for secure user authentication
+- **MongoDB** with Mongoose ODM for flexible data modeling
+- **bcryptjs** for secure password hashing
+- **nodemailer** for transactional emails
+
+### Utilities & Tools
+- **axios** for API communication
+- **clsx** + **tailwind-merge** for conditional styling
+- **lucide-react** for consistent iconography
+- **sonner** for elegant toast notifications
+- **ESLint** + **Prettier** + **TypeScript** for code quality
+
+---
+
+## 🎨 Design System
+
+### Color Palettes
+
+#### Light Mode - "Rose Gold Elegance"
+- **Primary:** Rose Gold (#E8B4A0) with warm undertones
+- **Secondary:** Dusty Pink (#F4C2C2) for accents
+- **Neutral:** Warm Cream (#FAF7F5) backgrounds
+- **Text:** Charcoal (#2C2C2C) for readability
+- **Accent:** Deep Burgundy (#8B4B61) for CTAs
+
+#### Dark Mode - "Midnight Luxe"
+- **Primary:** Champagne Gold (#D4A574) with sophisticated glow
+- **Secondary:** Muted Blush (#C9A1A1) for subtle accents
+- **Background:** Rich Charcoal (#1A1A1A) with subtle texture
+- **Text:** Pearl White (#F8F6F4) with high contrast
+- **Accent:** Copper Rose (#B8695B) for interactive elements
+
+### Typography Hierarchy
+- **Headings:** Inter Bold (premium, geometric sans-serif)
+- **Body:** Inter Regular with optimized line-height (1.6)
+- **Accent:** Playfair Display for product names (elegant serif touch)
+
+### Visual Aesthetic
+- **Minimalist luxury** with generous whitespace
+- **Soft, organic shapes** reflecting handcrafted nature
+- **High-quality photography** with consistent lighting/styling
+- **Subtle textures** suggesting premium materials
+
+---
+
+## 🎬 Animation System
+
+### Framer Motion Implementations
+- **Hero Section:** Parallax scrolling with layered elements
+- **Product Cards:** Hover lift effects with shadow transitions
+- **Image Galleries:** Smooth carousel with momentum scrolling
+- **Page Transitions:** Seamless route changes with fade/slide effects
+- **Cart Animations:** Spring-based item additions/removals
+
+### CSS-Based Animations
+- **Loading States:** Skeleton screens with shimmer effects
+- **Micro-interactions:** Button hover states, form field focus
+- **Scroll Reveals:** Staggered fade-up animations for content sections
+- **Theme Toggle:** Smooth sun/moon icon morphing transition
+
+### Performance Considerations
+- **Reduced Motion Support** for accessibility preferences
+- **GPU-optimized transforms** for smooth 60fps animations
+- **Intersection Observer** for efficient scroll-triggered animations
+
+---
+
+## 🧩 Component Architecture
+
+### 🧭 Navigation System
+**Animated Navbar**
+- Sticky header with backdrop blur effect
+- Logo with hover micro-animation
+- Category mega-menu with product previews
+- Search bar with animated expansion
+- Cart icon with item count badge
+- **Theme Toggle Component:** Morphing sun/moon icon with rotation
+
+### 🎯 Hero Banner Section
+- **Dynamic Product Showcase:** Rotating featured collections
+- **Artisan Story Integration:** Brief maker profiles with animations
+- **Call-to-Action Hierarchy:** Primary shop button, secondary learn more
+- **Mobile-optimized imagery** with touch-friendly interactions
+
+### ✨ Services/Features Section
+- **Handcrafted Promise:** Quality guarantee with visual icons
+- **Sustainable Materials:** Eco-friendly messaging with green accents
+- **Custom Orders:** Personalization options showcase
+- **Fast Shipping:** Logistics trust signals
+
+### 🛍️ Product Showcase System
+- **Category Grids:** Bangles, Cosmetics, Gift Sets with hover effects
+- **Quick View Modals:** Product details without page navigation
+- **Wishlist Integration:** Heart icon animations with state persistence
+- **Zoom Functionality:** High-res image exploration on hover/tap
+
+### 📞 Contact & Support
+- **Multi-channel Contact Form:** Inquiry type selection with conditional fields
+- **Live Chat Integration:** Customer support with typing indicators
+- **FAQ Accordion:** Expandable sections with search functionality
+- **Social Proof:** Customer testimonials with star ratings
+
+### 🦶 Footer Architecture
+- **Brand Story Summary:** Mission statement with artisan imagery
+- **Quick Links:** Organized by category with hover effects
+- **Newsletter Signup:** Email capture with incentive messaging
+- **Social Media Grid:** Instagram feed integration
+
+---
+
+## 📱 Responsiveness & Accessibility
+
+### Mobile-First Design Strategy
+- **Breakpoints:** 320px (mobile), 768px (tablet), 1024px (desktop), 1440px (large)
+- **Touch-optimized interactions:** 44px minimum tap targets
+- **Swipe gestures:** Product carousels and image galleries
+- **Progressive image loading** with blur-up technique
+
+### Accessibility Compliance (WCAG 2.1 AA)
+- **Keyboard Navigation:** Full site traversal without mouse
+- **Screen Reader Support:** Semantic HTML with ARIA labels
+- **Color Contrast:** 4.5:1 ratio for all text elements
+- **Focus Indicators:** Visible focus states for all interactive elements
+- **Alternative Text:** Descriptive image alt tags for products
+
+### Performance Optimization
+- **Image Optimization:** Next.js Image component with WebP/AVIF formats
+- **Code Splitting:** Route-based and component-based lazy loading
+- **Caching Strategy:** ISR for product pages, SSG for static content
+- **Bundle Analysis:** Regular monitoring with @next/bundle-analyzer
+
+---
+
+## 🎯 Target Audience & Brand Positioning
+
+### Primary Demographics
+- **Age Range:** 18-45 years
+- **Income Level:** Middle to upper-middle class ($40k-$100k+)
+- **Lifestyle:** Fashion-conscious, values authenticity and craftsmanship
+- **Shopping Behavior:** Mobile-first, social media influenced, seeks unique items
+
+### Brand Personality
+- **Authentic:** Celebrating real artisan stories and traditional techniques
+- **Premium:** Luxury feel without exclusionary pricing
+- **Empowering:** Supporting women artisans and customers
+- **Sustainable:** Environmentally conscious materials and practices
+
+### Tone of Voice
+- **Warm & Welcoming:** Friendly without being overly casual
+- **Educational:** Sharing craft knowledge and cultural significance
+- **Inspiring:** Encouraging self-expression through unique accessories
+- **Trustworthy:** Transparent about sourcing, materials, and processes
+
+### Competitive Differentiation
+- **Artisan Storytelling:** Behind-the-scenes content for each product
+- **Customization Options:** Personalized engraving and color choices
+- **Cultural Heritage:** Celebrating traditional craft techniques
+- **Community Building:** Customer feature stories and styling tips
+
+---
+
+## 🚀 Development Phases
+
+### Phase 1: Foundation (Weeks 1-2)
+- Project setup with Next.js and TypeScript
+- Design system implementation with Tailwind CSS
+- Basic component structure and routing
+
+### Phase 2: Core Features (Weeks 3-5)
+- Product catalog and shopping cart functionality
+- User authentication and profile management
+- Admin panel for inventory management
+
+### Phase 3: Enhancement (Weeks 6-7)
+- Advanced animations and micro-interactions
+- Payment gateway integration
+- Order tracking and customer notifications
+
+### Phase 4: Optimization (Week 8)
+- Performance tuning and accessibility audit
+- SEO optimization and meta tag implementation
+- Cross-browser testing and bug fixes
+
+---
+
+## 📊 Success Metrics
+
+### User Experience KPIs
+- **Page Load Speed:** < 3 seconds for product pages
+- **Mobile Conversion Rate:** > 2.5% (industry average: 1.8%)
+- **Cart Abandonment:** < 65% (target improvement from 70%+)
+- **User Engagement:** > 3 minutes average session duration
+
+### Business Objectives
+- **Revenue Growth:** 40% increase in online sales within 6 months
+- **Customer Acquisition:** 25% growth in new user registrations
+- **Brand Awareness:** 30% increase in organic search traffic
+- **Customer Retention:** 20% improvement in repeat purchase rate
+
+---
+
+*This project overview serves as the foundation for all development, design, and marketing decisions for Tonnika.com. Regular reviews and updates will ensure alignment with business goals and user needs.*
