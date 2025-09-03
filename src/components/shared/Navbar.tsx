@@ -23,11 +23,12 @@ const Navbar = () => {
   }, []);
 
   const navItems = [
-    { name: 'Bangles', href: '/bangles', hasDropdown: true },
-    { name: 'Cosmetics', href: '/cosmetics', hasDropdown: true },
-    { name: 'Gift Sets', href: '/gift-sets' },
-    { name: 'Custom Orders', href: '/custom' },
-    { name: 'Our Story', href: '/story' }
+    // { name: 'Bangles', href: '/bangles', hasDropdown: true },
+    // { name: 'Cosmetics', href: '/cosmetics', hasDropdown: true },
+    { name: 'Products', href: '/products',hasDropdown:false },
+    { name: 'About Us', href: '/about-us',hasDropdown:false  },
+    { name: 'Contact Us', href: '/contact-us',hasDropdown:false  },
+    { name: 'Blogs', href: '/blogs',hasDropdown:false  }
   ];
 
   const handleSearchSubmit = (e:React.FormEvent) => {
