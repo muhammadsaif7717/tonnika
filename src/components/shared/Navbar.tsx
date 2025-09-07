@@ -3,12 +3,13 @@ import React, { useState, useEffect } from 'react'
 import { Search, ShoppingCart, User, Menu, X, Heart } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import ThemeToggler from './ThemeToggler'
 
 const Navbar = () => {
   const router = useRouter()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [cartCount, setCartCount] = useState(3)
+  const [cartCount] = useState(3)
   const [search, setSearch] = useState('')
   const [categories] = useState([
     { name: 'Foundation', icon: '🧴' },
@@ -44,10 +45,14 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-sage-100'
-            : 'bg-white/80 backdrop-blur-sm'
-          }`}
+        className={`
+          fixed top-0 left-0 right-0 z-50 transition-all duration-300
+          ${isScrolled
+            ? `bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg 
+               border-b border-sage-100 dark:border-gray-700`
+            : `bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm`
+          }
+        `}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
@@ -55,18 +60,28 @@ const Navbar = () => {
             {/* Mobile menu button */}
             <button
               aria-label="Toggle menu"
-              className="lg:hidden p-2 text-charcoal hover:text-sage-600 transition-colors"
+              className={`
+                lg:hidden p-2 transition-colors rounded-md
+                text-gray-700 hover:text-sage-600 
+                dark:text-gray-300 dark:hover:text-sage-400
+                hover:bg-sage-50 dark:hover:bg-gray-800
+              `}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
 
             {/* Logo */}
-            <div className="flex-shrink-0 cursor-pointer">
-              <h1 className="text-2xl lg:text-3xl font-bold text-sage-600 font-serif tracking-wide hover:text-sage-700 transition-colors">
+            <Link href="/" className="flex-shrink-0 cursor-pointer group">
+              <h1 className={`
+                text-2xl lg:text-3xl font-bold font-serif tracking-wide transition-all duration-300
+                text-sage-600 group-hover:text-sage-700 
+                dark:text-sage-400 dark:group-hover:text-sage-300
+                group-hover:scale-105
+              `}>
                 Tonnika
               </h1>
-            </div>
+            </Link>
 
             {/* Desktop Nav */}
             <div className="hidden lg:flex items-center space-x-8">
@@ -74,7 +89,15 @@ const Navbar = () => {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="relative text-charcoal hover:text-sage-600 transition-colors font-medium after:content-[''] after:absolute after:w-0 after:h-[2px] after:left-0 after:-bottom-1 after:bg-sage-600 after:transition-all after:duration-300 hover:after:w-full"
+                  className={`
+                    relative font-medium transition-all duration-300 group
+                    text-gray-700 hover:text-sage-600 
+                    dark:text-gray-300 dark:hover:text-sage-400
+                    after:content-[''] after:absolute after:w-0 after:h-[2px] 
+                    after:left-0 after:-bottom-1 after:transition-all after:duration-300
+                    after:bg-sage-600 dark:after:bg-sage-400
+                    hover:after:w-full
+                  `}
                 >
                   {link.name}
                 </Link>
@@ -82,48 +105,91 @@ const Navbar = () => {
             </div>
 
             {/* Right section */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3">
 
-              {/* Search */}
-              {/* <form onSubmit={handleSearchSubmit} className="hidden md:flex relative">
+              {/* Search (Desktop) */}
+              <form onSubmit={handleSearchSubmit} className="hidden md:flex relative">
                 <input
                   type="text"
                   placeholder="Search products..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-64 pl-4 pr-12 py-2 bg-sage-50 border border-sage-200 rounded-full text-charcoal placeholder-sage-400 focus:outline-none focus:ring-2 focus:ring-sage-300"
+                  className={`
+                    w-64 pl-4 pr-12 py-2 rounded-full transition-all duration-300
+                    bg-sage-50 border border-sage-200 
+                    dark:bg-gray-800 dark:border-gray-600
+                    text-gray-700 placeholder-sage-400 
+                    dark:text-gray-300 dark:placeholder-gray-500
+                    focus:outline-none focus:ring-2 focus:ring-sage-300 
+                    dark:focus:ring-sage-500 focus:border-transparent
+                  `}
                 />
                 <button
                   type="submit"
-                  className="absolute right-1 top-1/2 -translate-y-1/2 bg-sage-600 hover:bg-sage-700 text-black rounded-full p-2 flex items-center justify-center transition-colors"
+                  className={`
+                    absolute right-1 top-1/2 -translate-y-1/2 rounded-full p-2 
+                    flex items-center justify-center transition-all duration-300
+                    bg-sage-600 hover:bg-sage-700 text-white
+                    dark:bg-sage-500 dark:hover:bg-sage-600
+                    transform hover:scale-105 active:scale-95
+                  `}
                 >
                   <Search size={16} />
                 </button>
-              </form> */}
+              </form>
 
-
-
+              {/* Theme Toggler */}
+              <ThemeToggler />
 
               {/* Wishlist */}
-              <button className="relative p-2 text-charcoal hover:text-sage-600 transition-colors rounded-full hover:bg-sage-50">
-                <Heart size={20} />
-                <span className="absolute -top-1 -right-1 bg-terracotta text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
+              <button className={`
+                relative p-2 rounded-full transition-all duration-300 transform
+                text-gray-700 hover:text-sage-600 
+                dark:text-gray-300 dark:hover:text-sage-400
+                hover:bg-sage-50 dark:hover:bg-gray-800
+                hover:scale-105 active:scale-95
+                group
+              `}>
+                <Heart size={20} className="group-hover:fill-current transition-all duration-300" />
+                <span className={`
+                  absolute -top-1 -right-1 w-5 h-5 rounded-full text-xs font-medium
+                  flex items-center justify-center transition-all duration-300
+                  bg-terracotta text-white dark:bg-orange-500 dark:text-white
+                  animate-pulse
+                `}>
                   2
                 </span>
               </button>
 
               {/* Cart */}
-              <button className="relative p-2 text-charcoal hover:text-sage-600 transition-colors rounded-full hover:bg-sage-50">
+              <button className={`
+                relative p-2 rounded-full transition-all duration-300 transform
+                text-gray-700 hover:text-sage-600 
+                dark:text-gray-300 dark:hover:text-sage-400
+                hover:bg-sage-50 dark:hover:bg-gray-800
+                hover:scale-105 active:scale-95
+              `}>
                 <ShoppingCart size={20} />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-terracotta text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium animate-pulse">
+                  <span className={`
+                    absolute -top-1 -right-1 w-5 h-5 rounded-full text-xs font-medium
+                    flex items-center justify-center transition-all duration-300
+                    bg-terracotta text-white dark:bg-orange-500 dark:text-white
+                    animate-pulse scale-110
+                  `}>
                     {cartCount}
                   </span>
                 )}
               </button>
 
               {/* User */}
-              <button className="p-2 text-charcoal hover:text-sage-600 transition-colors rounded-full hover:bg-sage-50">
+              <button className={`
+                p-2 rounded-full transition-all duration-300 transform
+                text-gray-700 hover:text-sage-600 
+                dark:text-gray-300 dark:hover:text-sage-400
+                hover:bg-sage-50 dark:hover:bg-gray-800
+                hover:scale-105 active:scale-95
+              `}>
                 <User size={20} />
               </button>
             </div>
@@ -132,55 +198,91 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         <div
-          className={`lg:hidden bg-white border-t border-sage-100 shadow-lg overflow-hidden transition-all duration-300 ${isMenuOpen ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'
-            }`}
+          className={`
+            lg:hidden overflow-hidden transition-all duration-300
+            bg-white dark:bg-gray-900 
+            border-t border-sage-100 dark:border-gray-700 
+            shadow-lg
+            ${isMenuOpen ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'}
+          `}
         >
           <div className="px-4 py-6 space-y-4">
             {/* Mobile Search */}
-            {/* <form onSubmit={handleSearchSubmit} className="relative md:hidden">
+            <form onSubmit={handleSearchSubmit} className="relative md:hidden">
               <input
                 type="text"
                 placeholder="Search products..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-4 pr-12 py-3 bg-sage-50 border border-sage-200 rounded-lg text-charcoal placeholder-sage-400 focus:outline-none focus:ring-2 focus:ring-sage-300"
+                className={`
+                  w-full pl-4 pr-12 py-3 rounded-lg transition-all duration-300
+                  bg-sage-50 border border-sage-200 
+                  dark:bg-gray-800 dark:border-gray-600
+                  text-gray-700 placeholder-sage-400 
+                  dark:text-gray-300 dark:placeholder-gray-500
+                  focus:outline-none focus:ring-2 focus:ring-sage-300 
+                  dark:focus:ring-sage-500 focus:border-transparent
+                `}
               />
               <button
                 type="submit"
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-sage-600 hover:bg-sage-700 text-black rounded-full p-2 flex items-center justify-center transition-colors"
+                className={`
+                  absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-2 
+                  flex items-center justify-center transition-all duration-300
+                  bg-sage-600 hover:bg-sage-700 text-white
+                  dark:bg-sage-500 dark:hover:bg-sage-600
+                  transform hover:scale-105 active:scale-95
+                `}
               >
                 <Search size={16} />
               </button>
-            </form> */}
+            </form>
 
             {/* Categories */}
-            {/* <div>
-              <h3 className="text-sage-600 font-semibold mb-2">Shop Categories</h3>
+            <div>
+              <h3 className={`
+                font-semibold mb-3 text-sage-600 dark:text-sage-400
+              `}>
+                Shop Categories
+              </h3>
               <div className="grid grid-cols-2 gap-2 pl-4">
                 {categories.map((category) => (
                   <a
                     key={category.name}
                     href="#"
-                    className="flex items-center space-x-2 p-2 text-charcoal hover:text-sage-600 transition-colors"
+                    className={`
+                      flex items-center space-x-2 p-2 rounded-md transition-colors
+                      text-gray-700 hover:text-sage-600 
+                      dark:text-gray-300 dark:hover:text-sage-400
+                      hover:bg-sage-50 dark:hover:bg-gray-800
+                    `}
                   >
-                    <span>{category.icon}</span>
-                    <span className="text-sm">{category.name}</span>
+                    <span className="text-lg">{category.icon}</span>
+                    <span className="text-sm font-medium">{category.name}</span>
                   </a>
                 ))}
               </div>
-            </div> */}
+            </div>
 
-            {/* Links */}
-            {navLinks.map((link) => (
-              <Link
-              onClick={()=>setIsMenuOpen(false)}
-                key={link.href}
-                href={link.href}
-                className="block py-2 text-charcoal hover:text-sage-600 transition-colors font-medium"
-              >
-                {link.name}
-              </Link>
-            ))}
+            {/* Navigation Links */}
+            <div className="border-t border-sage-100 dark:border-gray-700 pt-4">
+              {navLinks.map((link) => (
+                <Link
+                  onClick={() => setIsMenuOpen(false)}
+                  key={link.href}
+                  href={link.href}
+                  className={`
+                    block py-3 px-2 rounded-md font-medium transition-all duration-300
+                    text-gray-700 hover:text-sage-600 
+                    dark:text-gray-300 dark:hover:text-sage-400
+                    hover:bg-sage-50 dark:hover:bg-gray-800
+                    hover:translate-x-1
+                  `}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </nav>
