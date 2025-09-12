@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useMemo } from 'react';
-import { Search, Calendar, Clock,  Heart, Share2, BookOpen, Tag, ChevronRight, Bookmark, Eye } from 'lucide-react';
+import { Search, Calendar, Clock, Heart, Share2, BookOpen, Tag, ChevronRight, Bookmark, Eye, Sparkles, Leaf, TrendingUp } from 'lucide-react';
 import { BlogPost } from '@/types';
 import Image from 'next/image';
 
@@ -10,17 +10,15 @@ const BlogsPage = () => {
   const [savedPosts, setSavedPosts] = useState(new Set());
 
   const categories = [
-    { id: 'all', name: 'All Stories', count: 47 },
-    { id: 'artisan-stories', name: 'Artisan Stories', count: 18 },
-    { id: 'beauty-tips', name: 'Beauty Tips', count: 15 },
-    { id: 'craft-traditions', name: 'Craft Traditions', count: 8 },
-    { id: 'sustainable-beauty', name: 'Sustainable Beauty', count: 6 }
+    { id: 'all', name: 'All Stories', count: 47, icon: BookOpen },
+    { id: 'artisan-stories', name: 'Artisan Stories', count: 18, icon: Sparkles },
+    { id: 'beauty-tips', name: 'Beauty Tips', count: 15, icon: Heart },
+    { id: 'craft-traditions', name: 'Craft Traditions', count: 8, icon: TrendingUp },
+    { id: 'sustainable-beauty', name: 'Sustainable Beauty', count: 6, icon: Leaf }
   ];
 
-
-
   const filteredPosts = useMemo(() => {
-      const blogPosts:BlogPost[] = [
+      const blogPosts: BlogPost[] = [
     {
       id: 1,
       title: 'The Ancient Art of Kundan Jewelry: A Master Craftsman\'s Journey',
@@ -119,7 +117,7 @@ const BlogsPage = () => {
   const featuredPosts = filteredPosts.filter(post => post.featured);
   const regularPosts = filteredPosts.filter(post => !post.featured);
 
-  const toggleSavedPost = (postId:number) => {
+  const toggleSavedPost = (postId: number) => {
     const newSaved = new Set(savedPosts);
     if (newSaved.has(postId)) {
       newSaved.delete(postId);
@@ -129,7 +127,7 @@ const BlogsPage = () => {
     setSavedPosts(newSaved);
   };
 
-  const formatDate = (dateString:string) => {
+  const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -138,17 +136,20 @@ const BlogsPage = () => {
     });
   };
 
-const FeaturedPostCard: React.FC<{ post: BlogPost }> = ({ post })  => (
-    <article className="group relative bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+  const FeaturedPostCard: React.FC<{ post: BlogPost }> = ({ post }) => (
+    <article className="group relative bg-white/90 dark:bg-[#2A2A2A]/90 backdrop-blur-md rounded-3xl overflow-hidden shadow-2xl hover:shadow-[0_25px_60px_-12px_rgba(139,157,138,0.25)] dark:hover:shadow-[0_25px_60px_-12px_rgba(107,122,106,0.25)] transition-all duration-700 transform hover:-translate-y-3 border border-[#8B9D8A]/10 dark:border-[#6B7A6A]/20">
       <div className="relative h-80 overflow-hidden">
         <Image
-                        height={500}
-                        width={500}
+          height={500}
+          width={500}
           src={post.image}
           alt={post.title}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#2A2A2A]/80 via-transparent to-transparent" />
+        
+        {/* Decorative gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#8B9D8A]/20 via-transparent to-[#F5C5A8]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         
         {/* Save Button */}
         <button
@@ -156,37 +157,41 @@ const FeaturedPostCard: React.FC<{ post: BlogPost }> = ({ post })  => (
             e.preventDefault();
             toggleSavedPost(post.id);
           }}
-          className="absolute top-6 right-6 p-3 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300"
+          className="absolute top-6 right-6 p-3 rounded-2xl bg-white/20 dark:bg-[#2A2A2A]/40 backdrop-blur-md hover:bg-white/30 dark:hover:bg-[#2A2A2A]/60 transition-all duration-300 hover:scale-110"
         >
           <Bookmark 
             className={`w-5 h-5 ${
               savedPosts.has(post.id) 
-                ? 'text-yellow-400 fill-yellow-400' 
-                : 'text-white'
+                ? 'text-[#D4806B] fill-[#D4806B]' 
+                : 'text-white dark:text-[#F5F5F5]'
             }`}
           />
         </button>
 
         {/* Category Badge */}
         <div className="absolute top-6 left-6">
-          <span className="bg-rose-500 text-white text-xs font-semibold px-4 py-2 rounded-full uppercase tracking-wider">
+          <div className="flex items-center gap-2 bg-gradient-to-r from-[#8B9D8A] to-[#D4806B] text-white text-xs font-semibold px-4 py-2 rounded-full uppercase tracking-wider shadow-lg">
+            <Sparkles className="w-3 h-3" />
             Featured
-          </span>
+          </div>
         </div>
 
         {/* Author Info - Overlay */}
         <div className="absolute bottom-6 left-6 right-6">
           <div className="flex items-center gap-3 mb-4">
-            <Image
-                            height={500}
-                            width={500}
-              src={post.authorImage}
-              alt={post.author}
-              className="w-12 h-12 rounded-full border-2 border-white/20"
-            />
+            <div className="relative">
+              <Image
+                height={48}
+                width={48}
+                src={post.authorImage}
+                alt={post.author}
+                className="w-12 h-12 rounded-full border-2 border-white/30 dark:border-[#F5F5F5]/30"
+              />
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#8B9D8A]/20 to-[#D4806B]/20"></div>
+            </div>
             <div>
-              <p className="text-white font-semibold">{post.author}</p>
-              <div className="flex items-center gap-4 text-white/80 text-sm">
+              <p className="text-white dark:text-[#F5F5F5] font-semibold">{post.author}</p>
+              <div className="flex items-center gap-4 text-white/80 dark:text-[#F5F5F5]/80 text-sm">
                 <span className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
                   {formatDate(post.publishDate)}
@@ -201,46 +206,49 @@ const FeaturedPostCard: React.FC<{ post: BlogPost }> = ({ post })  => (
         </div>
       </div>
 
-      <div className="p-8">
-        <div className="flex items-center gap-2 mb-3">
-          <Tag className="w-4 h-4 text-rose-500" />
-          <span className="text-sm font-medium text-rose-600 dark:text-rose-400 capitalize">
+      <div className="p-8 relative">
+        {/* Decorative accent */}
+        <div className="absolute top-0 left-8 w-12 h-1 bg-gradient-to-r from-[#8B9D8A] to-[#D4806B] rounded-full"></div>
+        
+        <div className="flex items-center gap-2 mb-4 mt-2">
+          <Tag className="w-4 h-4 text-[#8B9D8A]" />
+          <span className="text-sm font-semibold text-[#8B9D8A] dark:text-[#6B7A6A] capitalize">
             {categories.find(c => c.id === post.category)?.name}
           </span>
         </div>
         
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 line-clamp-2 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors duration-300">
+        <h2 className="text-2xl font-bold text-[#2A2A2A] dark:text-[#F5F5F5] mb-4 line-clamp-2 group-hover:text-[#8B9D8A] transition-colors duration-300">
           {post.title}
         </h2>
         
-        <p className="text-gray-600 dark:text-gray-300 mb-6 line-clamp-3">
+        <p className="text-[#2A2A2A]/70 dark:text-[#F5F5F5]/70 mb-6 line-clamp-3 leading-relaxed">
           {post.excerpt}
         </p>
 
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-            <span className="flex items-center gap-1">
+          <div className="flex items-center gap-4 text-sm text-[#2A2A2A]/60 dark:text-[#F5F5F5]/60">
+            <span className="flex items-center gap-1 hover:text-[#8B9D8A] transition-colors duration-300">
               <Eye className="w-4 h-4" />
               {post.views} views
             </span>
-            <span className="flex items-center gap-1">
+            <button className="flex items-center gap-1 hover:text-[#D4806B] transition-colors duration-300">
               <Heart className="w-4 h-4" />
               24 likes
-            </span>
+            </button>
           </div>
           
-          <button className="flex items-center gap-2 text-rose-600 dark:text-rose-400 font-semibold hover:gap-3 transition-all duration-300">
+          <button className="flex items-center gap-2 bg-gradient-to-r from-[#8B9D8A] to-[#D4806B] text-white font-semibold px-6 py-2 rounded-full hover:gap-3 hover:shadow-lg transform hover:scale-105 transition-all duration-300">
             Read More
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-2 mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+        <div className="flex flex-wrap gap-2 mt-6 pt-6 border-t border-[#8B9D8A]/20 dark:border-[#6B7A6A]/20">
           {post.tags.slice(0, 3).map((tag, index) => (
             <span
               key={index}
-              className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full hover:bg-rose-100 dark:hover:bg-rose-900/30 hover:text-rose-600 dark:hover:text-rose-400 cursor-pointer transition-colors duration-300"
+              className="text-xs bg-[#F8F6F2] dark:bg-[#1A1A1A] text-[#2A2A2A] dark:text-[#F5F5F5] px-3 py-2 rounded-full hover:bg-[#8B9D8A]/10 dark:hover:bg-[#6B7A6A]/20 hover:text-[#8B9D8A] cursor-pointer transition-all duration-300 border border-[#8B9D8A]/10 dark:border-[#6B7A6A]/20"
             >
               {tag}
             </span>
@@ -250,17 +258,17 @@ const FeaturedPostCard: React.FC<{ post: BlogPost }> = ({ post })  => (
     </article>
   );
 
-const RegularPostCard: React.FC<{ post: BlogPost }> = ({ post })  => (
-    <article className="group bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+  const RegularPostCard: React.FC<{ post: BlogPost }> = ({ post }) => (
+    <article className="group bg-white/90 dark:bg-[#2A2A2A]/90 backdrop-blur-md rounded-2xl overflow-hidden shadow-lg hover:shadow-xl border border-[#8B9D8A]/10 dark:border-[#6B7A6A]/20 transition-all duration-300 transform hover:-translate-y-2">
       <div className="relative h-48 overflow-hidden">
         <Image
-                        height={500}
-                        width={500}
-
+          height={500}
+          width={500}
           src={post.image}
           alt={post.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#2A2A2A]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         
         {/* Save Button */}
         <button
@@ -268,46 +276,46 @@ const RegularPostCard: React.FC<{ post: BlogPost }> = ({ post })  => (
             e.preventDefault();
             toggleSavedPost(post.id);
           }}
-          className="absolute top-4 right-4 p-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:bg-white dark:hover:bg-gray-800 transition-all duration-300"
+          className="absolute top-4 right-4 p-2 rounded-xl bg-white/90 dark:bg-[#2A2A2A]/90 backdrop-blur-sm hover:bg-white dark:hover:bg-[#2A2A2A] transition-all duration-300 hover:scale-110"
         >
           <Bookmark 
             className={`w-4 h-4 ${
               savedPosts.has(post.id) 
-                ? 'text-yellow-500 fill-yellow-500' 
-                : 'text-gray-600 dark:text-gray-300'
+                ? 'text-[#D4806B] fill-[#D4806B]' 
+                : 'text-[#2A2A2A] dark:text-[#F5F5F5]'
             }`}
           />
         </button>
       </div>
 
-      <div className="p-6">
+      <div className="p-6 relative">
         <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-semibold text-rose-600 dark:text-rose-400 uppercase tracking-wider">
+          <div className="w-2 h-2 bg-gradient-to-r from-[#8B9D8A] to-[#D4806B] rounded-full"></div>
+          <span className="text-xs font-semibold text-[#8B9D8A] dark:text-[#6B7A6A] uppercase tracking-wider">
             {categories.find(c => c.id === post.category)?.name}
           </span>
         </div>
 
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors duration-300">
+        <h3 className="text-xl font-bold text-[#2A2A2A] dark:text-[#F5F5F5] mb-3 line-clamp-2 group-hover:text-[#8B9D8A] transition-colors duration-300">
           {post.title}
         </h3>
         
-        <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
+        <p className="text-[#2A2A2A]/70 dark:text-[#F5F5F5]/70 mb-4 line-clamp-2 leading-relaxed">
           {post.excerpt}
         </p>
 
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
             <Image
-                            height={500}
-                            width={500}
-                            
+              height={32}
+              width={32}
               src={post.authorImage}
               alt={post.author}
-              className="w-8 h-8 rounded-full"
+              className="w-8 h-8 rounded-full border border-[#8B9D8A]/20"
             />
             <div>
-              <p className="text-sm font-semibold text-gray-900 dark:text-white">{post.author}</p>
-              <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-sm font-semibold text-[#2A2A2A] dark:text-[#F5F5F5]">{post.author}</p>
+              <div className="flex items-center gap-2 text-xs text-[#2A2A2A]/60 dark:text-[#F5F5F5]/60">
                 <span>{formatDate(post.publishDate)}</span>
                 <span>•</span>
                 <span>{post.readTime}</span>
@@ -316,22 +324,22 @@ const RegularPostCard: React.FC<{ post: BlogPost }> = ({ post })  => (
           </div>
         </div>
 
-        <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
-          <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-            <span className="flex items-center gap-1">
+        <div className="flex items-center justify-between pt-4 border-t border-[#8B9D8A]/20 dark:border-[#6B7A6A]/20">
+          <div className="flex items-center gap-4 text-sm text-[#2A2A2A]/60 dark:text-[#F5F5F5]/60">
+            <span className="flex items-center gap-1 hover:text-[#8B9D8A] transition-colors duration-300">
               <Eye className="w-4 h-4" />
               {post.views}
             </span>
-            <button className="flex items-center gap-1 hover:text-rose-500 transition-colors duration-300">
+            <button className="flex items-center gap-1 hover:text-[#D4806B] transition-colors duration-300">
               <Heart className="w-4 h-4" />
               <span>12</span>
             </button>
-            <button className="flex items-center gap-1 hover:text-rose-500 transition-colors duration-300">
+            <button className="flex items-center gap-1 hover:text-[#F5C5A8] transition-colors duration-300">
               <Share2 className="w-4 h-4" />
             </button>
           </div>
           
-          <button className="text-rose-600 dark:text-rose-400 font-semibold text-sm hover:underline">
+          <button className="text-[#8B9D8A] hover:text-[#D4806B] font-semibold text-sm hover:underline transition-colors duration-300">
             Read More
           </button>
         </div>
@@ -340,64 +348,109 @@ const RegularPostCard: React.FC<{ post: BlogPost }> = ({ post })  => (
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-orange-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
+    <div className="min-h-screen bg-gradient-to-br from-[#F8F6F2] via-white to-[#F5C5A8]/20 dark:from-[#1A1A1A] dark:via-[#2A2A2A] dark:to-[#6B7A6A]/10 transition-colors duration-300 relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-[#8B9D8A]/10 to-transparent rounded-full blur-2xl"></div>
+        <div className="absolute top-40 right-20 w-48 h-48 bg-gradient-to-bl from-[#F5C5A8]/15 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-40 left-1/3 w-40 h-40 bg-gradient-to-tr from-[#D4806B]/10 to-transparent rounded-full blur-2xl"></div>
+      </div>
+
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-rose-500 to-orange-500 dark:from-rose-600 dark:to-orange-600 text-white py-24">
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="relative max-w-7xl mx-auto px-6 text-center">
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <BookOpen className="w-8 h-8" />
-            <h1 className="text-5xl font-bold">Stories & Insights</h1>
+      <div className="relative bg-gradient-to-r from-[#8B9D8A] via-[#D4806B] to-[#F5C5A8] text-white py-24 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#2A2A2A]/20 to-transparent"></div>
+        <div className="absolute inset-0">
+          <div className="absolute top-10 left-10 w-20 h-20 bg-white/10 rounded-full blur-2xl animate-pulse"></div>
+          <div className="absolute bottom-10 right-10 w-32 h-32 bg-white/5 rounded-full blur-3xl animate-pulse delay-300"></div>
+        </div>
+        
+        <div className="relative max-w-7xl mx-auto px-6 text-center z-10">
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="p-3 bg-white/20 backdrop-blur-md rounded-2xl">
+              <BookOpen className="w-8 h-8" />
+            </div>
+            <h1 className="text-5xl md:text-6xl font-bold">
+              Stories & Insights
+              <div className="w-24 h-1 bg-white/40 mx-auto mt-2 rounded-full"></div>
+            </h1>
+            <div className="p-3 bg-white/20 backdrop-blur-md rounded-2xl">
+              <Sparkles className="w-8 h-8 animate-pulse" />
+            </div>
           </div>
-          <p className="text-xl text-rose-100 max-w-3xl mx-auto">
-            Discover the artisans behind your favorite pieces, learn beauty secrets from experts, and explore the rich traditions that inspire our handcrafted collections
+          <p className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+            Discover the artisans behind your favorite pieces, learn beauty secrets from experts, 
+            and explore the rich traditions that inspire our handcrafted collections
           </p>
+          <div className="flex items-center justify-center gap-8 mt-8 text-sm text-white/80">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-white/60 rounded-full"></div>
+              <span>47 Stories Published</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-white/60 rounded-full"></div>
+              <span>10k+ Monthly Readers</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="relative max-w-7xl mx-auto px-6 py-16 z-10">
         {/* Search and Filter Section */}
-        <div className="flex flex-col lg:flex-row gap-6 mb-12">
+        <div className="flex flex-col lg:flex-row gap-8 mb-16">
           {/* Search Bar */}
-          <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <input
-              type="text"
-              placeholder="Search articles, topics, authors..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-4 py-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-rose-500 focus:border-transparent transition-all duration-300"
-            />
+          <div className="relative flex-1 group">
+            <div className="absolute inset-0 bg-gradient-to-r from-[#8B9D8A]/20 to-[#F5C5A8]/20 rounded-2xl blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300"></div>
+            <div className="relative">
+              <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 text-[#2A2A2A]/50 dark:text-[#F5F5F5]/50 w-5 h-5 z-10" />
+              <input
+                type="text"
+                placeholder="Search articles, beauty tips, artisan stories..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-14 pr-6 py-4 rounded-2xl border-2 border-[#8B9D8A]/20 dark:border-[#6B7A6A]/30 bg-white/90 dark:bg-[#2A2A2A]/90 backdrop-blur-md text-[#2A2A2A] dark:text-[#F5F5F5] focus:ring-2 focus:ring-[#8B9D8A]/50 focus:border-[#8B9D8A] transition-all duration-300 placeholder:text-[#2A2A2A]/50 dark:placeholder:text-[#F5F5F5]/50"
+              />
+            </div>
           </div>
 
           {/* Category Pills */}
           <div className="flex flex-wrap gap-3">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                  selectedCategory === category.id
-                    ? 'bg-rose-500 text-white shadow-lg scale-105'
-                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-rose-100 dark:hover:bg-rose-900/30 hover:text-rose-600 dark:hover:text-rose-400'
-                }`}
-              >
-                <span>{category.name}</span>
-                <span className="ml-2 text-sm opacity-75">({category.count})</span>
-              </button>
-            ))}
+            {categories.map((category) => {
+              const IconComponent = category.icon;
+              return (
+                <button
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.id)}
+                  className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-semibold transition-all duration-300 backdrop-blur-md border-2 ${
+                    selectedCategory === category.id
+                      ? 'bg-gradient-to-r from-[#8B9D8A] to-[#D4806B] text-white shadow-lg scale-105 border-transparent'
+                      : 'bg-white/80 dark:bg-[#2A2A2A]/80 text-[#2A2A2A] dark:text-[#F5F5F5] hover:bg-[#8B9D8A]/10 dark:hover:bg-[#6B7A6A]/20 hover:text-[#8B9D8A] hover:scale-105 border-[#8B9D8A]/20 dark:border-[#6B7A6A]/30'
+                  }`}
+                >
+                  <IconComponent className="w-4 h-4" />
+                  <span>{category.name}</span>
+                  <span className="text-xs opacity-75 bg-white/20 px-2 py-1 rounded-full">
+                    {category.count}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
         {/* Featured Posts Section */}
         {featuredPosts.length > 0 && (
-          <section className="mb-16">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-1 h-8 bg-gradient-to-b from-rose-500 to-orange-500 rounded-full"></div>
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Featured Stories</h2>
+          <section className="mb-20">
+            <div className="flex items-center gap-4 mb-12">
+              <div className="w-2 h-12 bg-gradient-to-b from-[#8B9D8A] via-[#D4806B] to-[#F5C5A8] rounded-full"></div>
+              <h2 className="text-4xl font-bold text-[#2A2A2A] dark:text-[#F5F5F5]">Featured Stories</h2>
+              <div className="flex-1 h-px bg-gradient-to-r from-[#8B9D8A]/30 via-[#D4806B]/30 to-transparent"></div>
+              <div className="flex items-center gap-2 text-[#2A2A2A]/60 dark:text-[#F5F5F5]/60">
+                <Sparkles className="w-4 h-4" />
+                <span className="text-sm">Handpicked by our editors</span>
+              </div>
             </div>
             
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {featuredPosts.slice(0, 2).map((post) => (
                 <FeaturedPostCard key={post.id} post={post} />
               ))}
@@ -407,13 +460,17 @@ const RegularPostCard: React.FC<{ post: BlogPost }> = ({ post })  => (
 
         {/* Regular Posts Section */}
         <section>
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-3">
-              <div className="w-1 h-8 bg-gradient-to-b from-rose-500 to-orange-500 rounded-full"></div>
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Latest Articles</h2>
+          <div className="flex items-center justify-between mb-12">
+            <div className="flex items-center gap-4">
+              <div className="w-2 h-12 bg-gradient-to-b from-[#F5C5A8] via-[#D4806B] to-[#8B9D8A] rounded-full"></div>
+              <h2 className="text-4xl font-bold text-[#2A2A2A] dark:text-[#F5F5F5]">Latest Articles</h2>
+              <div className="flex-1 h-px bg-gradient-to-r from-[#F5C5A8]/30 via-[#D4806B]/30 to-transparent"></div>
             </div>
-            <div className="text-gray-600 dark:text-gray-400">
-              {filteredPosts.length} articles found
+            <div className="flex items-center gap-2 bg-[#8B9D8A]/10 dark:bg-[#6B7A6A]/10 px-4 py-2 rounded-xl border border-[#8B9D8A]/20 dark:border-[#6B7A6A]/20">
+              <BookOpen className="w-4 h-4 text-[#8B9D8A]" />
+              <span className="text-[#2A2A2A] dark:text-[#F5F5F5] font-semibold">
+                {filteredPosts.length} articles found
+              </span>
             </div>
           </div>
 
@@ -424,20 +481,23 @@ const RegularPostCard: React.FC<{ post: BlogPost }> = ({ post })  => (
               ))}
             </div>
           ) : (
-            <div className="text-center py-16">
-              <div className="text-6xl text-gray-300 dark:text-gray-600 mb-4">📝</div>
-              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
+            <div className="text-center py-20">
+              <div className="relative inline-block mb-8">
+                <div className="text-8xl opacity-20">📝</div>
+                <div className="absolute inset-0 bg-gradient-to-br from-[#8B9D8A]/20 to-[#F5C5A8]/20 rounded-full blur-2xl"></div>
+              </div>
+              <h3 className="text-3xl font-bold text-[#2A2A2A] dark:text-[#F5F5F5] mb-4">
                 No articles found
               </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
-                Try adjusting your search terms or category filters
+              <p className="text-[#2A2A2A]/70 dark:text-[#F5F5F5]/70 mb-8 max-w-md mx-auto">
+                Try adjusting your search terms or category filters to discover more beauty stories and artisan insights
               </p>
               <button
                 onClick={() => {
                   setSearchTerm('');
                   setSelectedCategory('all');
                 }}
-                className="bg-rose-500 hover:bg-rose-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-300"
+                className="bg-gradient-to-r from-[#8B9D8A] to-[#D4806B] hover:from-[#8B9D8A]/90 hover:to-[#D4806B]/90 text-white px-8 py-4 rounded-2xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl"
               >
                 Show All Articles
               </button>
@@ -446,9 +506,14 @@ const RegularPostCard: React.FC<{ post: BlogPost }> = ({ post })  => (
 
           {/* Load More Button */}
           {regularPosts.length > 0 && (
-            <div className="text-center mt-12">
-              <button className="bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
-                Load More Articles
+            <div className="text-center mt-16">
+              <button className="group relative bg-gradient-to-r from-[#8B9D8A] via-[#D4806B] to-[#F5C5A8] hover:from-[#8B9D8A]/90 hover:via-[#D4806B]/90 hover:to-[#F5C5A8]/90 text-white px-12 py-6 rounded-2xl font-semibold text-lg shadow-2xl hover:shadow-[0_25px_60px_-12px_rgba(139,157,138,0.4)] transform hover:-translate-y-2 transition-all duration-500 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                <div className="relative flex items-center gap-3">
+                  <BookOpen className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
+                  Load More Stories
+                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                </div>
               </button>
             </div>
           )}
@@ -456,27 +521,60 @@ const RegularPostCard: React.FC<{ post: BlogPost }> = ({ post })  => (
       </div>
 
       {/* Newsletter Subscription */}
-      <section className="bg-gradient-to-r from-rose-500 to-orange-500 dark:from-rose-600 dark:to-orange-600 py-16 mt-16">
-        <div className="max-w-4xl mx-auto text-center px-6">
-          <h2 className="text-4xl font-bold text-white mb-4">
-            Never Miss a Story
-          </h2>
-          <p className="text-xl text-rose-100 mb-8">
-            Subscribe to our newsletter for the latest artisan stories, beauty tips, and behind-the-scenes content
+      <section className="relative bg-gradient-to-r from-[#8B9D8A] via-[#D4806B] to-[#F5C5A8] py-20 mt-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#2A2A2A]/10 to-transparent"></div>
+        <div className="absolute inset-0">
+          <div className="absolute top-10 left-20 w-24 h-24 bg-white/5 rounded-full blur-2xl animate-pulse"></div>
+          <div className="absolute bottom-10 right-20 w-32 h-32 bg-white/10 rounded-full blur-3xl animate-pulse delay-500"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-white/5 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="relative max-w-4xl mx-auto text-center px-6 z-10">
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="p-3 bg-white/20 backdrop-blur-md rounded-2xl">
+              <Heart className="w-6 h-6 text-white animate-pulse" />
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-white">
+              Never Miss a Story
+            </h2>
+            <div className="p-3 bg-white/20 backdrop-blur-md rounded-2xl">
+              <Sparkles className="w-6 h-6 text-white animate-pulse delay-300" />
+            </div>
+          </div>
+          
+          <p className="text-xl text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed">
+            Subscribe to our newsletter for the latest artisan stories, beauty tips, sustainable practices, 
+            and behind-the-scenes content from the world of handcrafted beauty
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-6 py-4 rounded-xl border-0 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-white"
-            />
-            <button className="bg-white text-rose-500 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-colors duration-300 whitespace-nowrap">
-              Subscribe
+          
+          <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto mb-6">
+            <div className="relative flex-1">
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                className="w-full px-6 py-4 rounded-2xl border-0 bg-white/90 backdrop-blur-md text-[#2A2A2A] placeholder-[#2A2A2A]/60 focus:ring-2 focus:ring-white focus:bg-white transition-all duration-300"
+              />
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#8B9D8A]/20 to-[#F5C5A8]/20 opacity-0 focus-within:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+            </div>
+            <button className="bg-white/20 backdrop-blur-md hover:bg-white/30 text-white border-2 border-white/30 hover:border-white/50 px-8 py-4 rounded-2xl font-semibold transition-all duration-300 whitespace-nowrap hover:scale-105">
+              Subscribe Now
             </button>
           </div>
-          <p className="text-rose-100 text-sm mt-4">
-            Join 10,000+ readers who love our stories
-          </p>
+          
+          <div className="flex items-center justify-center gap-8 text-white/80 text-sm">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-white/60 rounded-full"></div>
+              <span>Join 10,000+ readers</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-white/60 rounded-full"></div>
+              <span>Weekly beauty insights</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-white/60 rounded-full"></div>
+              <span>No spam, ever</span>
+            </div>
+          </div>
         </div>
       </section>
     </div>

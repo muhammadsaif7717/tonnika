@@ -50,7 +50,7 @@ const ThemeToggler = () => {
       onClick={toggleTheme}
       className={`
         relative p-2 rounded-full transition-all duration-500 ease-out
-        bg-gradient-to-br from-sage-50 to-sage-100 
+        bg-gradient-to-br from-sage-50 to-sage-100 scale-75 lg:scale-100 
         hover:from-sage-100 hover:to-sage-150
         dark:from-gray-800 dark:to-gray-700 
         dark:hover:from-gray-700 dark:hover:to-gray-600
