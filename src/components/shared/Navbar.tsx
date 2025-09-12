@@ -10,15 +10,15 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [cartCount] = useState(3)
-  const [search, setSearch] = useState('')
-  const [categories] = useState([
-    { name: 'Foundation', icon: '🧴' },
-    { name: 'Concealer', icon: '💄' },
-    { name: 'Serum', icon: '🧪' },
-    { name: 'Moisturizer', icon: '🧴' },
-    { name: 'Bangles', icon: '💍' },
-    { name: 'Accessories', icon: '✨' }
-  ])
+  // const [search, setSearch] = useState('')
+  // const [categories] = useState([
+  //   { name: 'Foundation', icon: '🧴' },
+  //   { name: 'Concealer', icon: '💄' },
+  //   { name: 'Serum', icon: '🧪' },
+  //   { name: 'Moisturizer', icon: '🧴' },
+  //   { name: 'Bangles', icon: '💍' },
+  //   { name: 'Accessories', icon: '✨' }
+  // ])
 
   const navLinks = [
     { name: 'Shop', href: '/shop' },
@@ -33,14 +33,14 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const handleSearchSubmit = (e: React.FormEvent | React.MouseEvent) => {
-    e.preventDefault()
-    if (search.trim()) {
-      router.push(`/shop?search=${encodeURIComponent(search)}`)
-      setSearch('')
-      setIsMenuOpen(false)
-    }
-  }
+  // const handleSearchSubmit = (e: React.FormEvent | React.MouseEvent) => {
+  //   e.preventDefault()
+  //   if (search.trim()) {
+  //     router.push(`/shop?search=${encodeURIComponent(search)}`)
+  //     setSearch('')
+  //     setIsMenuOpen(false)
+  //   }
+  // }
 
   return (
     <>
@@ -108,7 +108,7 @@ const Navbar = () => {
             <div className="flex items-center space-x-3">
 
               {/* Search (Desktop) */}
-              <form onSubmit={handleSearchSubmit} className="hidden md:flex relative">
+              {/* <form onSubmit={handleSearchSubmit} className="hidden md:flex relative">
                 <input
                   type="text"
                   placeholder="Search products..."
@@ -136,7 +136,7 @@ const Navbar = () => {
                 >
                   <Search size={16} />
                 </button>
-              </form>
+              </form> */}
 
               {/* Theme Toggler */}
               <ThemeToggler />
@@ -206,9 +206,9 @@ const Navbar = () => {
             ${isMenuOpen ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'}
           `}
         >
-          <div className="px-4 py-6 space-y-4">
+          <div className="px-4 pt-0 py-6 space-y-4">
             {/* Mobile Search */}
-            <form onSubmit={handleSearchSubmit} className="relative md:hidden">
+            {/* <form onSubmit={handleSearchSubmit} className="relative md:hidden">
               <input
                 type="text"
                 placeholder="Search products..."
@@ -236,10 +236,10 @@ const Navbar = () => {
               >
                 <Search size={16} />
               </button>
-            </form>
+            </form> */}
 
             {/* Categories */}
-            <div>
+            {/* <div>
               <h3 className={`
                 font-semibold mb-3 text-sage-600 dark:text-sage-400
               `}>
@@ -262,7 +262,7 @@ const Navbar = () => {
                   </a>
                 ))}
               </div>
-            </div>
+            </div> */}
 
             {/* Navigation Links */}
             <div className="border-t border-sage-100 dark:border-gray-700 pt-4">

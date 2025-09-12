@@ -98,18 +98,6 @@ const NewProducts = () => {
                 Handpicked beauty and accessory essentials crafted with care and passion by skilled artisans
               </p>
             </div>
-            
-            {/* Dark Mode Toggle */}
-            <button
-              onClick={toggleDarkMode}
-              className="fixed top-6 right-6 z-50 p-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md border border-[#D4806B]/20 dark:border-gray-600/20 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110"
-            >
-              {darkMode ? (
-                <Sun className="w-6 h-6 text-[#D4806B]" />
-              ) : (
-                <Moon className="w-6 h-6 text-[#8B9D8A]" />
-              )}
-            </button>
           </div>
 
           {/* Products Grid */}
